@@ -24,12 +24,6 @@ typedef struct LeafRef {
 	Link info;
 } leafref;
 
-typedef struct Frekuensi *address;
-typedef struct Frekuensi {
-	char info;
-	int freq;
-	address prev, next;
-} frekuensi;
 
 Link CreateNodeTree(char huruf, int freq);
 
