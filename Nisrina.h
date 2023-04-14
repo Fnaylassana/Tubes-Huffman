@@ -11,6 +11,7 @@
 #define Info(P) (P)->info
 #define Freq(P) (P)->freq
 #define Next(P) (P)->next
+#define infotype char*
 
 typedef struct node *address;
 struct node {
@@ -20,6 +21,7 @@ struct node {
 	address prev;
 	address next;
 }Node;
+
 
 address AlokasiChar(char X);
 
@@ -35,5 +37,6 @@ void sortingFreq(address *front);
 
 address createFrekuensi();
 
+infotype InputCodeChar(infotype deskripsi);
 
 #endif

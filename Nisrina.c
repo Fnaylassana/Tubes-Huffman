@@ -1,5 +1,5 @@
 #include "Nisrina.h"
-
+#include "Fauza.h"
 address AlokasiChar(char X)
 {
 	 /* Kamus Lokal */
@@ -202,3 +202,19 @@ void PrintInfoChar (address data)
 		 }
 	}
 }
+
+infotype InputCodeChar(infotype deskripsi)
+{
+	infotype KodeChar;
+	
+	KodeChar = (infotype)malloc(50*sizeof(char));
+	
+	printf("%s", deskripsi);
+	scanf("%s", KodeChar);
+	
+	return KodeChar;
+}
+
+
+
+
