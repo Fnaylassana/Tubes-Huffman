@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #include "Nisrina.h"
 #define Info(P) (P)->info
-#define Freq(P) P->freq
-#define LeftSon(P) P->leftson
-#define RightSon(P) P->rightson
-#define Parent(P) P->parent
-#define Prev(P) P->prev
+#define Freq(P) (P)->freq
+#define LeftSon(P) (P)->leftson
+#define RightSon(P) (P)->rightson
+#define Parent(P) (P)->parent
+#define Prev(P) (P)->prev
 #define Next(P) (P)->next
 
 typedef struct NodeTree *Link;
