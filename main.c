@@ -33,5 +33,7 @@ int main()
 	KodeBinary = Incode(root, "an");
 	printf("tet %s", KodeBinary);
 	
+	Decode(root);
+	
 	return 0;
 }
