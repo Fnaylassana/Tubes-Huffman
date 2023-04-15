@@ -1,30 +1,7 @@
 #ifndef Nisrina_H
 #define Nisrina_H
 
-#include "Fauza.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <ctype.h>
-
-#define Nil NULL
-#define Prev(P) (P)->prev
-#define Info(P) (P)->info
-#define Freq(P) (P)->freq
-#define Next(P) (P)->next
-#define infotype char*
-
-typedef struct node *address;
-struct node {
-
-	char info;
-	int freq;
-	address prev;
-	address next;
-}Node;
-
+#include "header.h" 
 
 address AlokasiChar(char X);
 

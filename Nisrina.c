@@ -1,5 +1,6 @@
-#include "Nisrina.h"
+#include "header.h"
 #include "Fauza.h"
+#include "Nisrina.h"
 address AlokasiChar(char X)
 {
 	 /* Kamus Lokal */

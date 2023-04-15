@@ -30,8 +30,7 @@ int main()
 	KodeChar = InputCodeChar("input");
 	printf("Test %s", KodeChar);
 	
-	
-	KodeBinary = Incode(root, "AB");
+	KodeBinary = Incode(root, "an");
 	printf("tet %s", KodeBinary);
 	
 	return 0;
