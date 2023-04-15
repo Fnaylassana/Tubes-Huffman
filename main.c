@@ -12,6 +12,9 @@ int main()
 	Link root;
 	infotype KodeChar;
 	
+	infotype KodeBinary;
+	KodeBinary = (infotype)malloc(30*sizeof(char));
+	
 	front = Nil;
 	KodeChar = Nil;
 	
@@ -29,7 +32,8 @@ int main()
 	printf("Test %s", KodeChar);
 	
 	
-	
+	KodeBinary = Incode(root, "AB");
+	printf("tet %s", KodeBinary);
 	
 	return 0;
 }

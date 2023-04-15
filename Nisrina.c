@@ -216,5 +216,74 @@ infotype InputCodeChar(infotype deskripsi)
 }
 
 
+void SearchTree(Link root, char x, Link *temp2)
+{
+	Link temp;
+	temp=root;
+	if(temp != Nil)
+	{
+		if(Info(temp) == x)
+			{
+				*temp2 = temp;
+			}
+		SearchTree(RightSon(temp), x, &(*temp2));
+		SearchTree(LeftSon(temp), x, &(*temp2));
+	}
+	
+}
+
+infotype Incode(Link root, infotype KodeChar)
+{
+	char huruf;
+	Link alamat, Pcur;
+	infotype KodeBinary;
+	
+	
+	infotype tempBinary;
+	tempBinary = (infotype)malloc(30*sizeof(char));
+	tempBinary[0] = '\0';
+	
+	infotype temp;
+	temp = (infotype)malloc(2*sizeof(char));
+	temp[0] = '\0';
+	
+	
+	alamat = Nil;
+	Pcur = Nil;
+	
+	int i,length,j;
+	i=0;
+	do{
+		KodeBinary = (infotype)malloc(30*sizeof(char));
+		KodeBinary[0] = '\0';
+		huruf = KodeChar[i];
+		SearchTree(root, huruf, &alamat);
+		while(alamat != root)
+		{
+			if(alamat == LeftSon(Parent(alamat)))
+			{
+				strcat(KodeBinary,"0");
+				alamat = Parent(alamat);
+			}
+			else if(alamat == RightSon(Parent(alamat)))
+			{
+				strcat(KodeBinary,"1");
+				alamat = Parent(alamat);
+			}
+		}
+		length = strlen(KodeBinary);
+		for(j=length;j>=0;j--)
+		{
+			temp[0]= KodeBinary[j];
+			temp[1]= '\0';
+			strcat(tempBinary,temp);
+		}
+		i++;
+		
+	}while(huruf != '\0');
+	
+	return tempBinary;
+}
+
 
 
