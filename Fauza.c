@@ -1,4 +1,6 @@
+#include "header.h"
 #include "Fauza.h"
+#include "Nisrina.h"
 
 Link CreateNodeTree(char huruf, int freq)
 {

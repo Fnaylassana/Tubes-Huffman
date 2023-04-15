@@ -1,3 +1,6 @@
+#ifndef header_H
+#define header_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,3 +37,5 @@ typedef struct LeafRef {
 	address1 prev, next;
 	Link info;
 } leafref;
+
+#endif
