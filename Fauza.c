@@ -139,6 +139,8 @@ Link CreateTree (address1 front)
 		
 		RightSon(parent) = right;
 		LeftSon(parent) = left;
+		Parent(right) = parent;
+		Parent(left) = parent;
 		
 		if (rear == NULL){
 			return parent;
