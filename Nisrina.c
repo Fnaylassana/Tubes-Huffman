@@ -74,46 +74,7 @@ void InsVLastChar(address *front, address *rear, char X)
 
 
 
-void sortingFreq(address *front)
-{
-	address Pcur;
-	address temp, max;
-	int tempFreq;
-	char tempChar;
-	
-	Pcur = Nil;
-	temp = Nil;
-	max = Nil;
-	
-	if(*front!=NULL)
-    {
-        Pcur=*front;
-        while(Next(Pcur)!=NULL)
-        {
-            temp=Pcur;
-            max=Pcur;
-            while(temp!=NULL)
-            {
-                if(Freq(temp) > Freq(max))
-                {
-                    max=temp;
-                }
-                temp = Next(temp);
-            }
-            if(Freq(Pcur) < Freq(max))
-            {
-            	tempChar = Info(Pcur);
-                tempFreq= Freq(Pcur);
-                Info(Pcur) = Info(max);
-                Freq(Pcur) = Freq(max);
-                Info(max)=tempChar;
-                Freq(max)=tempFreq;
-            }
-            Pcur=Next(Pcur);
-        }
-    }
-	
-}
+
 
 address createFrekuensi()
 {
@@ -174,6 +135,47 @@ address createFrekuensi()
     return front;
 }
 
+void sortingFreq(address *front)
+{
+	address Pcur;
+	address temp, max;
+	int tempFreq;
+	char tempChar;
+	
+	Pcur = Nil;
+	temp = Nil;
+	max = Nil;
+	
+	if(*front!=NULL)
+    {
+        Pcur=*front;
+        while(Next(Pcur)!=NULL)
+        {
+            temp=Pcur;
+            max=Pcur;
+            while(temp!=NULL)
+            {
+                if(Freq(temp) > Freq(max))
+                {
+                    max=temp;
+                }
+                temp = Next(temp);
+            }
+            if(Freq(Pcur) < Freq(max))
+            {
+            	tempChar = Info(Pcur);
+                tempFreq= Freq(Pcur);
+                Info(Pcur) = Info(max);
+                Freq(Pcur) = Freq(max);
+                Info(max)=tempChar;
+                Freq(max)=tempFreq;
+            }
+            Pcur=Next(Pcur);
+        }
+    }
+	
+}
+
 void PrintInfoChar (address data)
 {
 	 /* Kamus Lokal */
@@ -217,10 +219,8 @@ infotype InputCodeChar(infotype deskripsi)
 }
 
 
-void SearchTree(Link root, char x, Link *temp2)
+void SearchTree(Link temp, char x, Link *temp2)
 {
-	Link temp;
-	temp=root;
 	if(temp != Nil)
 	{
 		if(Info(temp) == x)
