@@ -17,7 +17,7 @@ infotype InputCodeBinary(infotype deskripsi)
 
 
 infotype Decode(Link root){
-	int i = 0, a = 0;
+	int i = 0;
 	Link pCur;
 	infotype str;
 	
