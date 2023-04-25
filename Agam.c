@@ -16,22 +16,17 @@ infotype InputCodeBinary(infotype deskripsi)
 }
 
 
-infotype Decode(Link root){
+infotype Decode(Link root, infotype str){
 	int i = 0;
 	Link pCur;
-	infotype str;
 	
-	str = (infotype) malloc (10 * sizeof(char));
 	infotype kalimat;
 	kalimat = (infotype) malloc (30 * sizeof(char));
 	kalimat[0] ='\0';
+	
 	infotype temp;
 	temp = (infotype) malloc (2 * sizeof(char));
 	temp[0] ='\0';
-	
-
-	str = InputCodeBinary("\n--> Masukkan code:");
-	printf("\nCode yang Anda inputkan %s", str);
 	
 	
 	pCur = root;
@@ -52,8 +47,7 @@ infotype Decode(Link root){
 		pCur = root;	
 	}
 
-	
-	printf("\nKata tersebut adalah %s", kalimat);	
+	return kalimat;
 }
 
 

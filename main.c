@@ -33,7 +33,12 @@ int main()
 	KodeBinary = Incode(root, "an");
 	printf("tet %s", KodeBinary);
 	
-	Decode(root);
+	KodeBinary = InputCodeBinary("\n--> Masukkan code:");
+	printf("\nCode yang Anda inputkan %s", KodeBinary);
+	
+	KodeChar = Decode(root, KodeBinary);
+	printf("\nKata tersebut adalah %s", KodeChar);
+	
 	
 	return 0;
 }

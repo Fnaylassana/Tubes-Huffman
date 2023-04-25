@@ -14,7 +14,9 @@
 #define Parent(P) (P)->parent
 #define Prev(P) (P)->prev
 #define Next(P) (P)->next
-#define infotype char*
+//#define infotype char*
+
+typedef char *infotype;
 
 typedef struct node *address;
 struct node {

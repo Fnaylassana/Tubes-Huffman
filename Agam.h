@@ -9,6 +9,6 @@
 
 
 infotype InputCodeBinary(infotype deskripsi);
-infotype Decode(Link root);
+infotype Decode(Link root, infotype str);
 
 #endif
