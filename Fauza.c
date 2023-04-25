@@ -167,7 +167,7 @@ Link CreateTree (address1 front)
 	}
 }
 
-bool Search(infotype NmFile, infotype NmBarang){
+bool SearchBarang(infotype NmFile, infotype NmBarang){
 	FILE *in;
 	bool ketemu = false;
 	infotype nama, harga, stok;
@@ -192,7 +192,7 @@ bool Search(infotype NmFile, infotype NmBarang){
 	return ketemu;
 }
 
-void FSearch(infotype NmFile, infotype NmBarang, infotype *Harga, infotype *Stok){
+void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype *Stok){
 	FILE *in;
 	infotype nama;
 	
