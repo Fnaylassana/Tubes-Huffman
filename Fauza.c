@@ -167,6 +167,25 @@ Link CreateTree (address1 front)
 	}
 }
 
+void CekHarga (Link root)
+{
+	infotype barang, harga, stok;
+	
+	barang = InputCodeBinary("\n--> Masukkan kode barang: ");
+	
+	if (SearchBarang("coba.txt", barang)){
+    	FSearchBarang("coba.txt", barang, &harga, &stok);
+    	barang = Decode(root, barang);
+    	printf ("\nNama barang: %s", barang);
+    	harga = Decode(root, harga);
+    	printf ("\nHarga: %s", harga);
+    	stok = Decode(root, stok);
+    	printf ("\nJumlah stok: %s", stok);
+	} else{
+		printf ("\nKode barang yang anda inputkan salah");
+	}
+}
+
 bool SearchBarang(infotype NmFile, infotype NmBarang){
 	FILE *in;
 	bool ketemu = false;
@@ -180,7 +199,7 @@ bool SearchBarang(infotype NmFile, infotype NmBarang){
 			nama = (infotype) malloc (50*sizeof(char));
 			harga = (infotype) malloc (50*sizeof(char));
 			stok = (infotype) malloc (50*sizeof(char));
-        	fscanf(in,"%[^\t]\t\t\t\t%[^\t]\t\t\t\t%[^\n]\n", nama, harga, stok);
+        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\n]\n", nama, harga, stok);
 			fflush(stdin);
         	if (strcmp(NmBarang, nama) == 0){
 	          	ketemu = true;
@@ -204,7 +223,7 @@ void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype
 			nama = (infotype) malloc (50*sizeof(char));
 			*Harga = (infotype) malloc (50*sizeof(char));
 			*Stok = (infotype) malloc (50*sizeof(char));
-        	fscanf(in,"%[^\t]\t\t\t\t%[^\t]\t\t\t\t%[^\n]\n", nama, *Harga, *Stok);
+        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\n]\n", nama, *Harga, *Stok);
 			fflush(stdin);
         	if (strcmp(NmBarang, nama) == 0){
 				break;
@@ -212,5 +231,4 @@ void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype
        }
        fclose(in);
     }
-	
 }
