@@ -1,6 +1,36 @@
 #include "header.h"
 #include "Fauza.h"
 #include "Nisrina.h"
+
+
+//market modul
+bool loginAdmin(infotype username, infotype password)
+{
+	infotype usernameAdm;
+	usernameAdm = (infotype)malloc(10*sizeof(char));
+	usernameAdm = "adminTubes";
+	
+	infotype passwordAdm;
+	passwordAdm = (infotype)malloc(10*sizeof(char));
+	passwordAdm = "tubesSDA23";
+	
+	
+	if((strcmp(username, usernameAdm) == 0) && (strcmp(password, passwordAdm) == 0))
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
+
+
+
+
+//huffman tree modul
 address AlokasiChar(char X)
 {
 	 /* Kamus Lokal */
