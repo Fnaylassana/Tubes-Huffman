@@ -166,3 +166,51 @@ Link CreateTree (address1 front)
 		}	 
 	}
 }
+
+bool Search(infotype NmFile, infotype NmBarang){
+	FILE *in;
+	bool ketemu = false;
+	infotype nama, harga, stok;
+	
+	in = fopen(NmFile,"r");
+    if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(!feof(in) && !ketemu){
+			nama = (infotype) malloc (50*sizeof(char));
+			harga = (infotype) malloc (50*sizeof(char));
+			stok = (infotype) malloc (50*sizeof(char));
+        	fscanf(in,"%[^\t]\t\t\t\t%[^\t]\t\t\t\t%[^\n]\n", nama, harga, stok);
+			fflush(stdin);
+        	if (strcmp(NmBarang, nama) == 0){
+	          	ketemu = true;
+			}
+       }
+       fclose(in);
+    }
+    
+	return ketemu;
+}
+
+void FSearch(infotype NmFile, infotype NmBarang, infotype *Harga, infotype *Stok){
+	FILE *in;
+	infotype nama;
+	
+	in = fopen(NmFile,"r");
+    if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(1){
+			nama = (infotype) malloc (50*sizeof(char));
+			*Harga = (infotype) malloc (50*sizeof(char));
+			*Stok = (infotype) malloc (50*sizeof(char));
+        	fscanf(in,"%[^\t]\t\t\t\t%[^\t]\t\t\t\t%[^\n]\n", nama, *Harga, *Stok);
+			fflush(stdin);
+        	if (strcmp(NmBarang, nama) == 0){
+				break;
+			}
+       }
+       fclose(in);
+    }
+	
+}

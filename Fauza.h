@@ -19,4 +19,8 @@ address1 CreateListOfLeaf (address head);
 
 Link CreateTree (address1 front);
 
+bool Search(infotype NmFile, infotype NmBarang);
+
+void FSearch(infotype NmFile, infotype NmBarang, infotype *Harga, infotype *Stok);
+
 #endif
