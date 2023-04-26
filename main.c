@@ -9,13 +9,16 @@ int main()
 	address front, P;
 	address1 leafref;
 	Link root;
+	bool test;
 	infotype KodeChar;
+	
 	
 	infotype KodeBinary;
 	KodeBinary = (infotype)malloc(30*sizeof(char));
 	
 	front = Nil;
 	KodeChar = Nil;
+	
 	
 	front = createFrekuensi();
 	sortingFreq(&front);
@@ -38,6 +41,16 @@ int main()
 	
 	KodeChar = Decode(root, KodeBinary);
 	printf("\nKata tersebut adalah %s", KodeChar);
+	
+	test = loginAdmin("adminTubes", "tubesSDA23");
+	if(test)
+	{
+		printf("login berhasil");
+	}
+	else
+	{
+		printf("login gagal");
+	}
 	
 	
 	return 0;
