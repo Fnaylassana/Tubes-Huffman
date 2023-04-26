@@ -7,16 +7,33 @@
 #include <stdbool.h>
 #include <ctype.h>
 #define Nil NULL
+#define Barang(Q) (Q)->nama_barang
+#define Harga(Q) (Q)->harga
+#define Kuantitas(Q) (Q)->kuantitas
+#define Total(Q) (Q)->total
 #define Info(P) (P)->info
 #define Freq(P) (P)->freq
+#define Prev(P) (P)->prev
+#define Next(P) (P)->next
 #define LeftSon(P) (P)->leftson
 #define RightSon(P) (P)->rightson
 #define Parent(P) (P)->parent
-#define Prev(P) (P)->prev
-#define Next(P) (P)->next
+
+
+
 //#define infotype char*
 
 typedef char *infotype;
+
+typedef struct Keranjang *stroller;
+typedef struct Keranjang{
+	stroller prev;
+	infotype nama_barang;
+	int harga;
+	int kuantitas;
+	int total;
+	stroller next;
+} keranjang;
 
 typedef struct node *address;
 struct node {
@@ -39,5 +56,7 @@ typedef struct LeafRef {
 	address1 prev, next;
 	Link info;
 } leafref;
+
+
 
 #endif

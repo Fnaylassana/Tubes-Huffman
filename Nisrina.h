@@ -3,6 +3,7 @@
 
 #include "header.h" 
 
+stroller SearchKeranjang (stroller front, infotype barang);
 address AlokasiChar(char X);
 
 address Search (address front, char X);

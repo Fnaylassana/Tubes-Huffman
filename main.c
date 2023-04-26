@@ -9,7 +9,7 @@ int main()
 	address front, P;
 	address1 leafref;
 	Link root;
-	bool test;
+	int role;
 	infotype KodeChar;
 	
 	
@@ -19,39 +19,36 @@ int main()
 	front = Nil;
 	KodeChar = Nil;
 	
-	
+	//pembuatan huffman tree
 	front = createFrekuensi();
 	sortingFreq(&front);
-	PrintInfoChar (front);
 	
 	leafref = CreateListOfLeaf(front);
 	
 	root = CreateTree (leafref);
 	
-	printf ("%c %d", Info(root), Freq(root));
-	
-	KodeChar = InputCodeChar("input");
-	printf("Test %s", KodeChar);
-	
-	KodeBinary = Incode(root, "an");
-	printf("tet %s", KodeBinary);
-	
-	KodeBinary = InputCodeBinary("\n--> Masukkan code:");
-	printf("\nCode yang Anda inputkan %s", KodeBinary);
-	
-	KodeChar = Decode(root, KodeBinary);
-	printf("\nKata tersebut adalah %s", KodeChar);
-	
-	test = loginAdmin("adminTubes", "tubesSDA23");
-	if(test)
+	//market
+	//selamat_datang();
+	system("cls");
+	loading("\tTUNGGU SEBENTAR...");
+	do
 	{
-		printf("login berhasil");
-	}
-	else
-	{
-		printf("login gagal");
-	}
-	
+		selection(&role, "user", "admin", "Siapakah Anda?", "saya adalah");
+		if(role == 1)
+		{
+			CekHarga (root);
+		}
+		else if(role == 2)
+		{
+			adminFitur(root);
+		}
+		else
+		{
+			printf("role yang and pilih tidak tersedia\n");
+			printf("pilih role yang sudah tersedia [klik enter]");
+			getche();
+		}
+	}while(role !=1 && role !=2);
 	
 	return 0;
 }
