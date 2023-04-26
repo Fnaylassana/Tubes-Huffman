@@ -18,10 +18,9 @@
 #define LeftSon(P) (P)->leftson
 #define RightSon(P) (P)->rightson
 #define Parent(P) (P)->parent
-
-
-
-//#define infotype char*
+#define NamaBrg(P) (P)->nmbrg
+#define Harga(P) (P)->harga
+#define Stok(P) (P)->stok
 
 typedef char *infotype;
 
@@ -57,6 +56,10 @@ typedef struct LeafRef {
 	Link info;
 } leafref;
 
-
+typedef struct FileContent *address2;
+typedef struct FileContent {
+	infotype nmbrg, harga, stok;
+	address2 next;
+} filecontent;
 
 #endif
