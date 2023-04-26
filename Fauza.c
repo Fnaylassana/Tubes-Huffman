@@ -173,8 +173,8 @@ void CekHarga (Link root)
 	
 	barang = InputCodeBinary("\n--> Masukkan kode barang: ");
 	
-	if (SearchBarang("coba.txt", barang)){
-    	FSearchBarang("coba.txt", barang, &harga, &stok);
+	if (SearchBarang("BarangBinary.txt", barang)){
+    	FSearchBarang("BarangBinary.txt", barang, &harga, &stok);
     	barang = Decode(root, barang);
     	printf ("\nNama barang: %s", barang);
     	harga = Decode(root, harga);
@@ -233,14 +233,14 @@ void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype
     }
 }
 
-void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru)
+void Replace(Link root, infotype namabrg, infotype hargabaru, infotype stokbaru)
 {
 	FILE *in;
 	bool ketemu = false;
 	infotype nama, harga, stok;
 	address2 front = Nil, rear = Nil, temp = Nil;
 	
-	in = fopen("coba.txt","r");
+	in = fopen("BarangBinary.txt","r");
     if(!in){  
        printf("\nFile tidak ditemukan");
     }else{
@@ -264,20 +264,38 @@ void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru)
 		Stok(temp) = stokbaru;
 	}
 	
-	in = fopen("coba.txt", "w");
+	temp = front;
+	
+	in = fopen("BarangBinary.txt", "w");
 	if(!in){  
        printf("\nFile tidak ditemukan");
     }else{
        while(front != Nil && !ketemu){
+        	fprintf(in,"%s\t%s\t%s\n", NamaBrg(front), Harga(front), Stok(front));
+			front = Next(front);
+       }
+       fclose(in);
+    }
+    
+    in = fopen("NamaBarang.txt", "w");
+	if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(temp != Nil && !ketemu){
 			nama = (infotype) malloc (50*sizeof(char));
 			harga = (infotype) malloc (50*sizeof(char));
 			stok = (infotype) malloc (50*sizeof(char));
-			DelFirstBrg (&front, &nama, &harga, &stok);
+			DelFirstBrg (&temp, &nama, &harga, &stok);
+			nama = Decode(root, nama);
+			harga = Decode(root, harga);
+			stok = Decode(root, stok);
         	fprintf(in,"%s\t%s\t%s\n", nama, harga, stok);
 			fflush(stdin);
        }
        fclose(in);
     }
+    
+    rear = Nil;
 }
 
 void InsertLastBrg (address2 *head, address2 *tail, address2 Q)
