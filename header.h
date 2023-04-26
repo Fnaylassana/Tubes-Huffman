@@ -19,7 +19,6 @@
 #define RightSon(P) (P)->rightson
 #define Parent(P) (P)->parent
 #define NamaBrg(P) (P)->nmbrg
-#define Harga(P) (P)->harga
 #define Stok(P) (P)->stok
 
 typedef char *infotype;
