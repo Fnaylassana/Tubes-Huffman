@@ -25,4 +25,16 @@ bool SearchBarang(infotype NmFile, infotype NmBarang);
 
 void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype *Stok);
 
+void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru);
+
+void InsertLastBrg (address2 *head, address2 *tail, address2 Q);
+
+void InsVLastBrg(address2 *front, address2 *rear, infotype X, infotype Y, infotype Z);
+
+address2 CreateNodeBrg(infotype nmbrg, infotype harga, infotype stok);
+
+address2 SearchNodeBrg (address2 front, infotype X);
+
+void DelFirstBrg (address2 *front, infotype *nmbrg, infotype *harga, infotype *stok);
+
 #endif

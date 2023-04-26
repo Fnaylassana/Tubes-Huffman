@@ -14,13 +14,14 @@
 #define Parent(P) (P)->parent
 #define Prev(P) (P)->prev
 #define Next(P) (P)->next
-//#define infotype char*
+#define NamaBrg(P) (P)->nmbrg
+#define Harga(P) (P)->harga
+#define Stok(P) (P)->stok
 
-typedef char *infotype;
+typedef const char *infotype;
 
 typedef struct node *address;
 struct node {
-
 	char info;
 	int freq;
 	address prev;
@@ -39,5 +40,11 @@ typedef struct LeafRef {
 	address1 prev, next;
 	Link info;
 } leafref;
+
+typedef struct FileContent *address2;
+typedef struct FileContent {
+	infotype nmbrg, harga, stok;
+	address2 next;
+} filecontent;
 
 #endif

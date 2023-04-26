@@ -232,3 +232,130 @@ void FSearchBarang(infotype NmFile, infotype NmBarang, infotype *Harga, infotype
        fclose(in);
     }
 }
+
+void Replace(infotype namabrg, infotype hargabaru, infotype stokbaru)
+{
+	FILE *in;
+	bool ketemu = false;
+	infotype nama, harga, stok;
+	address2 front = Nil, rear = Nil, temp = Nil;
+	
+	in = fopen("coba.txt","r");
+    if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(!feof(in) && !ketemu){
+			nama = (infotype) malloc (50*sizeof(char));
+			harga = (infotype) malloc (50*sizeof(char));
+			stok = (infotype) malloc (50*sizeof(char));
+        	fscanf(in,"%[^\t]\t%[^\t]\t%[^\n]\n", nama, harga, stok);
+			fflush(stdin);
+        	InsVLastBrg(&front, &rear, nama, harga, stok);
+       }
+       fclose(in);
+    }
+    
+    temp = SearchNodeBrg(front, namabrg);
+    
+    if (temp == NULL){
+    	printf ("Barang yang anda inputkan tidak ada");
+	} else {
+		Harga(temp) = hargabaru;
+		Stok(temp) = stokbaru;
+	}
+	
+	in = fopen("coba.txt", "w");
+	if(!in){  
+       printf("\nFile tidak ditemukan");
+    }else{
+       while(front != Nil && !ketemu){
+			nama = (infotype) malloc (50*sizeof(char));
+			harga = (infotype) malloc (50*sizeof(char));
+			stok = (infotype) malloc (50*sizeof(char));
+			DelFirstBrg (&front, &nama, &harga, &stok);
+        	fprintf(in,"%s\t%s\t%s\n", nama, harga, stok);
+			fflush(stdin);
+       }
+       fclose(in);
+    }
+}
+
+void InsertLastBrg (address2 *head, address2 *tail, address2 Q)
+{
+	address2 P;
+	
+	P = *tail;
+	
+	if (*head == NULL){
+		*head = Q;
+	} else{
+		Next(P) = Q;
+	}
+	
+	*tail = Q;
+}
+
+void InsVLastBrg(address2 *front, address2 *rear, infotype X, infotype Y, infotype Z)
+{
+	address2 P;
+	
+	P = CreateNodeBrg(X, Y, Z);
+	
+	if (P != Nil){	
+		InsertLastBrg (front,rear, P);
+	}
+			
+}
+
+address2 CreateNodeBrg(infotype nmbrg, infotype harga, infotype stok)
+{
+	address2 P;
+	
+	P = (address2) malloc (sizeof(filecontent));
+	
+	if (P != NULL){		
+		NamaBrg(P) = nmbrg;
+		Harga(P) = harga;
+		Stok(P) = stok;
+		Next(P) = NULL;
+	}
+	
+	return P;
+}
+
+address2 SearchNodeBrg (address2 front, infotype X)
+{
+	address2 P;
+	bool found =  false;
+	
+	P = front;
+	while ((P != Nil) && (!found))
+	{
+		if (strcmp(NamaBrg(P), X) == 0)
+		{ 
+			found = true; 	
+			return P;
+		}
+		else
+		{	
+			P = Next(P);
+		}
+	}
+	
+	return NULL;
+}
+
+void DelFirstBrg (address2 *front, infotype *nmbrg, infotype *harga, infotype *stok)
+{
+	address2 temp;
+	
+	temp = *front;
+	
+	*nmbrg = NamaBrg(temp);
+	*harga = Harga(temp);
+	*stok = Stok(temp);
+	
+	*front = Next(temp);
+	
+	free (temp);
+}
