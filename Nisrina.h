@@ -4,6 +4,18 @@
 #include "header.h" 
 
 stroller SearchKeranjang (stroller front, infotype barang);
+
+double hitung_diskon(int total, double potongan);
+
+double hitung_hasil(int total, double potongan, int minimal, double ppn);
+
+void output_bayar(int total, int minimal, double ppn, double diskon, double hasil);
+
+int total_harga(stroller front);
+
+double hitung_ppn(int total, double ppn);
+
+//huffman tree
 address AlokasiChar(char X);
 
 address Search (address front, char X);

@@ -81,6 +81,13 @@ void adminFitur(Link root)
 {
 	bool valid;
 	int fitur;
+	double potongan = 0.07;
+	double ppn = 0.10;
+	int minimal = 100000;
+	int total ;
+	double diskon;
+	double pajak;
+	double total_akhir;
 	infotype username;
 	username = (infotype)malloc(20*sizeof(char));
 	
@@ -93,7 +100,6 @@ void adminFitur(Link root)
 	
 	stroller rear;
 	rear = Nil;
-	
 	
 	do
 	{
@@ -108,11 +114,19 @@ void adminFitur(Link root)
 				selection(&fitur, "Input Barang Baru", "Kasir", "Fitur admin : ", "saya akan menggunakan fitur : ");
 				if(fitur == 1)
 				{
-					printf("hai input");
+					InputBarang(root);
 				}
 				else if(fitur == 2)
 				{
 					pemesanan(&front, &rear, root);
+					input_struk(front);
+					system("cls");
+					PrintInfokeranjang (front);
+					total = total_harga(front);
+					diskon = hitung_diskon(total, potongan);
+					pajak = hitung_ppn(total, ppn);
+					total_akhir = hitung_hasil(total, potongan,  minimal,  pajak);
+					output_bayar(total, minimal, pajak, potongan, total_akhir);	
 				}
 				else
 				{
@@ -134,19 +148,22 @@ void adminFitur(Link root)
 
 void pemesanan(stroller *front, stroller *rear, Link root)
 {
-	char lagi;
+	char nStep;
 	char pilih;
 	bool search;
 	infotype KodeCharBarang;
 	infotype KodeCharHarga;
+	infotype KodeCharStok;
 	int harga;
 	int kuantitas;
 	int total;
+	int stok;
 	infotype KodeBinaryBarang;
 	infotype KodeBinaryHarga; 
 	infotype KodeBinaryStok;
 
 	stroller alamatBarang;
+	stroller deleteKeranjang;
 	
 	do
 	{
@@ -156,19 +173,27 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 			KodeBinaryHarga = (infotype) malloc (30*sizeof(char));
 			KodeCharHarga = (infotype) malloc (30*sizeof(char));
 			KodeBinaryStok = (infotype) malloc (30*sizeof(char));
+			KodeCharStok = (infotype) malloc (30*sizeof(char));
 			
-			printf("\n masukkan kode yang tertera pada barang : ");
-			KodeBinaryBarang = InputCodeBinary("\n--> Masukkan kode barang: ");
-			
-			printf("\n masukkan kuantitas barang : ");
-			scanf("%d", &kuantitas);
-			search = SearchBarang("coba.txt", KodeBinaryBarang);
+			KodeBinaryBarang = InputCodeBinary("\n masukkan kode yang tertera pada barang : ");
+			do
+			{
+				printf("\n masukkan kuantitas barang : ");
+				scanf("%d", &kuantitas);	
+			}while(kuantitas == 0);
+			search = SearchBarang("BarangBinary.txt", KodeBinaryBarang);
 			if(search)
 			{
-				FSearchBarang("coba.txt", KodeBinaryBarang, &KodeBinaryHarga, &KodeBinaryStok);
+				FSearchBarang("BarangBinary.txt", KodeBinaryBarang, &KodeBinaryHarga, &KodeBinaryStok);
 				KodeCharBarang = Decode(root, KodeBinaryBarang);
 				KodeCharHarga = Decode(root, KodeBinaryHarga);
-				harga  = atof(KodeCharHarga);
+				KodeCharStok = Decode(root, KodeBinaryStok);
+				stok = atoi(KodeCharStok);
+				stok = stok - kuantitas;
+				sprintf(KodeCharStok, "%d", stok);
+				KodeBinaryStok = (infotype) malloc (30*sizeof(char));
+				KodeBinaryStok = Incode(root, KodeCharStok);
+				harga  = atoi(KodeCharHarga);
 				total = harga * kuantitas;
 				alamatBarang = SearchKeranjang (*front, KodeCharBarang);
 				if(alamatBarang != Nil)
@@ -181,11 +206,34 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 				{
 					InsVLastKeranjang(&(*front), &(*rear), KodeCharBarang, harga, kuantitas, total);
 				}
-				
-					PrintInfokeranjang (*front);
-				printf("pesan lagi ? \n");
-				scanf("%c", &lagi);
-				
+				Replace(root, KodeBinaryBarang, KodeBinaryHarga, KodeBinaryStok);
+				PrintInfokeranjang (*front);
+				printf("ketikkan huruf 'H' untuk menghapus barang :  \n");
+				nStep = getche();
+				if(nStep == 'H' || nStep == 'h')
+				{
+					KodeCharBarang = (infotype) malloc (30*sizeof(char));
+					KodeBinaryBarang = (infotype) malloc (30*sizeof(char));
+					KodeBinaryBarang = InputCodeBinary("\n--> Masukkan kode barang: ");
+					KodeCharBarang = Decode(root, KodeBinaryBarang);
+					deleteKeranjang = SearchKeranjang (*front, KodeCharBarang);
+					do{
+						printf("\n masukkan kuantitas barang : ");
+					scanf("%d", &kuantitas);
+					}while(kuantitas > Kuantitas(deleteKeranjang) || kuantitas <0);
+					FSearchBarang("BarangBinary.txt", KodeBinaryBarang, &KodeBinaryHarga, &KodeBinaryStok);
+					KodeCharStok = Decode(root, KodeBinaryStok);
+					stok = atoi(KodeCharStok);
+					stok = stok + kuantitas;
+					Kuantitas(deleteKeranjang) = Kuantitas(deleteKeranjang) - kuantitas;
+					sprintf(KodeCharStok, "%d", stok);
+					KodeBinaryStok = (infotype) malloc (30*sizeof(char));
+					KodeBinaryStok = Incode(root, KodeCharStok);
+					Replace(root, KodeBinaryBarang, KodeBinaryHarga, KodeBinaryStok);
+					DelKeranjang (front, KodeCharBarang);
+				}
+				printf("Ketikkan huruf 'T' untuk menambah barang : \n");
+				nStep = getche();
 			}
 			else
 			{
@@ -194,9 +242,39 @@ void pemesanan(stroller *front, stroller *rear, Link root)
 				getche();
 				break;
 			}
-		}while(lagi == 'Y' || lagi == 'y');
+		}while(nStep == 'T' || nStep == 't');
 	}while(!search);
 	
+}
+
+void input_struk(stroller data)
+{
+	stroller P;
+	int i;
+	i = 1;
+	FILE *kj;
+	kj=fopen("struk_belanja.txt", "a+");
+	if (data != Nil)
+	{
+		header_struk();
+		 P = data;
+		 for (;;)
+		 {
+			if (P == Nil)
+			{
+				 printf("\n");
+				 break;
+			}
+			else	/* Belum berada di akhir List */
+			{
+				 fprintf(kj, "  %d.\t   %s\t\t      %d\t    %d\t     %d\t      \n", i+1, Barang(P), Harga(P), Kuantitas(P), Total(P));
+			fprintf(kj,"|-------------------------------------------------------------|\n");
+				 P = Next(P);
+				 i++;
+			}
+		 }
+	}
+	fclose(kj);
 }
 
 stroller AlokasiKeranjang(infotype barang, int harga, int kuantitas, int total)
@@ -274,8 +352,18 @@ void PrintInfokeranjang (stroller data)
 	 /* Kamus Lokal */
 	stroller P;
 	int i;
+	i = 1;
 	
 	 /* Algoritma */
+	system("cls");
+	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
+	puts	("\t\t\t\t\t\t\t\t\t|                       DELIVERY MARKET                       |");
+	puts	("\t\t\t\t\t\t\t\t\t|                   Telepon : 087734469228                    |");
+	puts	("\t\t\t\t\t\t\t\t\t|                Jl. Gegerkalong Hilir, Ciwaruga              |");
+	puts	("\t\t\t\t\t\t\t\t\t|                        Bandung Barat                        |");
+	puts	("\t\t\t\t\t\t\t\t\t|=============================================================|");
+	puts	("\t\t\t\t\t\t\t\t\t| NO |      BARANG        |   HARGA   | KUANTITAS |   TOTAL   |");
+	puts	("\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------|");
 	if (data == Nil)
 	{
 		 printf ("List Kosong .... \a\n");
@@ -292,13 +380,64 @@ void PrintInfokeranjang (stroller data)
 			}
 			else	/* Belum berada di akhir List */
 			{
-				 printf (" %s : %d  : %d  : %d \n ", Barang(P), Harga(P), Kuantitas(P), Total(P));
+				 printf (" \t\t\t\t\t\t\t\t\t  %d.\t   %s\t      %d\t    %d\t     %d\t      \n ", i, Barang(P), Harga(P), Kuantitas(P), Total(P));
+				 puts	("\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------|");	
 				 P = Next(P);
+				 i++;
 			}
 		 }
 	}
 }
 
+void DelKeranjang (stroller *front, infotype nama)
+/* IS : L sembarang */
+/* FS : Jika ada elemen list beraddress P, dengan Info(P) = X */
+/* 	Maka P dihapus dari list dan di dealokasi */
+/* Jika tidak ada elemen list dengan Info(P) = X, maka list tetap */
+/* List mungkin menjadi kosong karena penghapusan */
+{
+	 /* Kamus Lokal */
+	stroller P, Prec;
+	bool found=false;
+	int compare;
+	 /* Algoritma */
+		Prec = Nil;
+	P = *front;
+	while ((P != Nil) && (!found))
+	{
+		compare = strcmp(Barang(P), nama);
+		 if (compare == 0)
+		 {	found = true;	}
+		 else
+		 {
+		Prec = P;
+		P = Next(P);
+		 }
+	} /* P = Nil Atau Ketemu */
+
+	if (found)
+	{
+		 if (Prec == Nil && Next(P) == Nil)		/* Hanya 1 elemen */
+		 {	*front = Nil;	}
+		 else if (Prec == Nil)			/* Ketemu di elemen 1*/
+		 {	*front = Next(P);	}
+		 else		/* Ketemu di elemen list yang ditengah/akhir */
+		 {	Next(Prec) = Next(P);	}
+		 Next(P) = Nil;
+		 DeAlokasi (P);
+	}
+}
+
+void DeAlokasi (stroller P)
+/* IS : P terdefinisi */
+/* FS : P dikembalikan ke sistem */
+/* Melakukan dealokasi / pengembalian address P ke system */
+{
+	 if (P != Nil)
+	 {
+	free (P);
+	 }
+}
 
 void header_struk()
 {
@@ -314,6 +453,81 @@ void header_struk()
     fprintf(kj,"|-------------------------------------------------------------|\n");
     fclose(kj);
 }
+
+double hitung_diskon(int total, double potongan)
+{
+	double hitung;
+	hitung = total*potongan;
+	
+	return hitung;
+}
+
+double hitung_hasil(int total, double potongan, int minimal, double ppn)
+{
+	double totalAkhir;
+	if(total>= minimal )
+	{
+		totalAkhir = (total - potongan)  + ppn;
+	}
+	else
+	{
+		totalAkhir = total  + ppn;
+	}
+	
+	return totalAkhir;
+}
+
+void output_bayar(int total, int minimal, double ppn, double diskon, double hasil)
+{
+	printf	("\t\t\t\t\t\t\t\t\t   PPN 10 persen :                          Rp. %g\n", ppn);
+	if(total >= minimal)
+	{
+		puts	("\t\t\t\t\t\t\t\t\t|---------------Selamat anda mendapatkan diskon!--------------|");
+		printf	("\t\t\t\t\t\t\t\t\t  Jumlah pembelanjaan anda lebih dari %d\n",minimal);
+		printf	("\t\t\t\t\t\t\t\t\t  Jumlah pembayaran : Rp. %g ( Diskon sebesar Rp.%g) \n",hasil, diskon);
+		puts	("\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------|");
+		
+	}
+	else
+	{
+		printf	("\t\t\t\t\t\t\t\t\t  Jumlah pembayaran :                       Rp. %g \n",hasil);
+		puts	("\t\t\t\t\t\t\t\t\t|-------------------------------------------------------------|");
+	}
+}
+
+int total_harga(stroller front)
+{
+	stroller P;
+	int total;
+	total =0;
+	if (front!= Nil)
+	{
+		 P = front;
+		 for (;;)
+		 {
+			if (P == Nil)
+			{
+				 break;
+			}
+			else	/* Belum berada di akhir List */
+			{
+				 total = total + Total(P);
+				 P = Next(P);
+			}
+		 }
+	}
+	
+	return total;
+}
+
+double hitung_ppn(int total, double ppn)
+{
+	double hitung;
+	hitung = total*ppn;
+	
+	return hitung;
+}
+
 //huffman tree modul
 address AlokasiChar(char X)
 {
