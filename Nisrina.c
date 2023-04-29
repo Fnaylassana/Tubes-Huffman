@@ -1,7 +1,7 @@
 #include "header.h"
 #include "Fauza.h"
 #include "Nisrina.h"
-
+#include "Agam.h"
 
 //market modul
 bool loginAdmin(infotype username, infotype password)
@@ -89,6 +89,7 @@ void adminFitur(Link root)
 	double pajak;
 	double total_akhir;
 	double uang_kembalian;
+	uang_kembalian = 0;
 	infotype username;
 	username = (infotype)malloc(20*sizeof(char));
 	
@@ -130,7 +131,6 @@ void adminFitur(Link root)
 					output_bayar(total, minimal, pajak, potongan, total_akhir);	
 					uang_kembalian = UangKembalian(total_akhir);
 					printf("\n di .c%g", uang_kembalian);
-					printf("\n di .cc %g", UangKembalian(total_akhir));
 					tampilanKembalian(uang_kembalian);
 				}
 				else
