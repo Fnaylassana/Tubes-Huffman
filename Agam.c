@@ -131,6 +131,36 @@ void InputBarang(Link root){
 	
 }
 
+double UangKembalian(double totalHarga){
+	double UangKembali, JumlahUang;
+	
+	do{
+		printf("\nMasukkan Jumlah Uang: ");
+		scanf("%lf", &JumlahUang);
+		
+		if(totalHarga > JumlahUang){
+			printf("\nMaaf Uang Anda kurang");
+		}	
+	}while(totalHarga > JumlahUang);
+
+	UangKembali = JumlahUang - totalHarga;
+	printf("%lf", UangKembali);
+	printf("\nini yang g %g", UangKembali);
+	
+	return UangKembali;
+}
+
+
+void tampilanKembalian(double Uangkembalian){
+	
+	printf	("\t\t\t\t\t\t\t\t\t  Kembalian :                       Rp. %g \n",Uangkembalian);
+	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
+	puts	("\t\t\t\t\t\t\t\t\t|             TERIMA KASIH, SUDAH BERBELANJA                  |");
+	puts	("\t\t\t\t\t\t\t\t\t|              SELAMAT BERBELANJA KEMBALI :)                  |");
+	puts	("\n\t\t\t\t\t\t\t\t\t|=============================================================|");
+	
+}
+
 
 
 

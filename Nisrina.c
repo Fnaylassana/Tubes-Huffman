@@ -88,6 +88,7 @@ void adminFitur(Link root)
 	double diskon;
 	double pajak;
 	double total_akhir;
+	double uang_kembalian;
 	infotype username;
 	username = (infotype)malloc(20*sizeof(char));
 	
@@ -127,6 +128,10 @@ void adminFitur(Link root)
 					pajak = hitung_ppn(total, ppn);
 					total_akhir = hitung_hasil(total, potongan,  minimal,  pajak);
 					output_bayar(total, minimal, pajak, potongan, total_akhir);	
+					uang_kembalian = UangKembalian(total_akhir);
+					printf("\n di .c%g", uang_kembalian);
+					printf("\n di .cc %g", UangKembalian(total_akhir));
+					tampilanKembalian(uang_kembalian);
 				}
 				else
 				{
